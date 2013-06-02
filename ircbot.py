@@ -1,29 +1,37 @@
-readbuffer=""
+import socket
+import sys
+import string
 
-ircsock = socket.socket() # socket to connect to irc channel
+import twisted.words.protocols
+import twisted.internet
+import twisted.python
 
 
-def init_irc_connection ():
-    irchost = "mccs.stu.marist.edu"
-    ircport = 6667
-    NICK="battle-bot"
-    IDENT="battle-bot"
-    REALNAME="Your Mom"
-    CHAN="#chat"
-    ircsock.connect((irchost,ircport))
-    ircsock.send("NICK %s\r\n" % NICK)
-    ircsock.send("USER %s %s bla :%s\r\n" % (IDENT, irchost,REALNAME))
-    ircsock.send("JOIN:%s\r\n" % CHAN)
-    ircsock.send("PRIVMSG %s:%s\r\n" % (CHAN, "This is a test message. Prepare for imminent mortal combat"))
+class Bot(irc.IRCClient):
+    """A logging IRC bot."""
 
-    while 1:
-    readbuffer=readbuffer+ircsock.recv(1024)
-    temp=string.split(readbuffer,"\n")
-    readbuffer=temp.pop()
+    nickname = "doof"
 
-for line in temp:
-    line=string.rstrip(line)
-    line=string.split(line)
+    def connectionMade(self):
+        irc.IRCCLIENT.connectionMade(self)
 
-    if(line[0]=="PING"):
-      ircsock.send("PONG %s\r\n" % line[1])
+
+    def connectionLost(self, reason):
+        irc.IRCCLIENT.connectionLost(self, reason)
+
+
+
+    # callbacks for events
+
+    def signedOn(self):
+        """Called when bot has sucessfully signed on to server."""
+        self.join(self.factory.channel)
+
+    def joined(self, channel):
+        """This will be called when the bot joins the channel."""
+
+
+    def privmsg(self, user. channel, msg):
+        """This will be called when the bot receives a message."""
+        user = user.split('!', 1)[0]
+        s
