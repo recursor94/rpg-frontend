@@ -29,8 +29,8 @@ class BattleBot(irc.IRCClient):
     """An irc bot which should handle battles and rpg logic"""
 
     nickname = "doofy"
-    self.backendConnection = clientSocket.BackEndConnection(os.environ['HOSTNAME'], os.environ['PORT'])
-
+    backendConnection = clientSocket.BackEndConnection(os.environ['HOSTNAME'], int(os.environ['PORT']))
+    
     def connectionMade(self):
         irc.IRCClient.connectionMade(self)
         self.logger = MessageLogger(open(self.factory.filename, "a"))
@@ -43,7 +43,7 @@ class BattleBot(irc.IRCClient):
                         time.asctime(time.localtime(time.time())))
         self.logger.close()
 
-
+p
     # callbacks for events
 
     def signedOn(self):
