@@ -4,7 +4,8 @@
 from twisted.words.protocols import irc
 from twisted.internet import reactor, protocol
 from twisted.python import log
-import time, sys
+import time, sys, os
+import clientSocket
 
 class MessageLogger:
     """
@@ -28,6 +29,7 @@ class BattleBot(irc.IRCClient):
     """An irc bot which should handle battles and rpg logic"""
 
     nickname = "doofy"
+    self.backendConnection = clientSocket.BackEndConnection(os.environ['HOSTNAME'], os.environ['PORT'])
 
     def connectionMade(self):
         irc.IRCClient.connectionMade(self)
