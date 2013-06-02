@@ -3,7 +3,6 @@ import os
 import sys
 import string
 
-
 backsock = socket.socket() # socket to connect to the web back end
 
 
@@ -19,5 +18,5 @@ def connect_to_server ():
     #while 1:
     #backsock.send('Hello\n')
     #print backsock.recv(1024)
-
-    #backsock.close()
+def close_connection():
+    backsock.close()
