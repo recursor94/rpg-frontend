@@ -7,11 +7,11 @@ import string
 backsock = socket.socket() # socket to connect to the web back end
 
 
-def init_server_connection ():
-    "Connects client bot to back-end server"
+def connect_to_server ():
+   """Connects client bot to back-end server"""
 
     backhost = os.environ['HOSTNAME']
-    backport = 9001
+    backport = os.environ['PORT']
 
     backsock.connect((backhost,backport))
 
