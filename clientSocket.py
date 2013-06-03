@@ -14,5 +14,11 @@ class BackEndConnection:
         self.backsock = socket.socket() # socket to connect to the web back end
         self.backsock.connect((hostname, port))
 
-    def close_connection(self):
+    def sendMessage(self,message):
+        self.backsock.send(message)
+
+    def closeConnection(self):
         backsock.close()
+
+    def register(self, username):  #Register username in server
+        self.sendMessage("register username")

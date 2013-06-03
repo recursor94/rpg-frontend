@@ -28,9 +28,10 @@ class MessageLogger:
 class BattleBot(irc.IRCClient):
     """An irc bot which should handle battles and rpg logic"""
 
-    nickname = "doofy"
+    nickname = "battle-bot"
     backendConnection = clientSocket.BackEndConnection(os.environ['HOSTNAME'], int(os.environ['PORT']))
-    
+    commands = {"register" :
+
     def connectionMade(self):
         irc.IRCClient.connectionMade(self)
         self.logger = MessageLogger(open(self.factory.filename, "a"))
@@ -43,7 +44,6 @@ class BattleBot(irc.IRCClient):
                         time.asctime(time.localtime(time.time())))
         self.logger.close()
 
-p
     # callbacks for events
 
     def signedOn(self):
@@ -59,7 +59,7 @@ p
         user = user.split('!', 1)[0]
         self.logger.log("<%s> %s" % (user, msg))
 
-        #Check to se if they're sending me a private message
+        #Check to see if they're sending me a private message
         if channel == self.nickname:
             msg = "Hello! I see that you've sent me a private message.\
             What would you like to discuss?"
@@ -68,14 +68,16 @@ p
 
         # Otherwise check to see if it is a message directed at me
         elif msg.startswith(self.nickname + ":"):
-            msg = "%s: I am a simple bot" % user
             self.msg(channel, msg)
             self.logger.log("<%s> %s" % (self.nickname, msg))
+
 
     def action (self, user, channel, msg):
         """This will get called when the bot sees someone perform an action."""
         user = user.split('!', 1)[0]
         self.logger.log("* %s %s" % (user, msg))
+
+
 
     #irc callbacks
 
