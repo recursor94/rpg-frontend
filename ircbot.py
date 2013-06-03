@@ -29,8 +29,8 @@ class BattleBot(irc.IRCClient):
     """An irc bot which should handle battles and rpg logic"""
 
     nickname = "battle-bot"
-    backendConnection = clientSocket.BackEndConnection(os.environ['HOSTNAME'], int(os.environ['PORT']))
-    commands = {"register" :
+    backendConnection = clientSocket.BackEndConnection(os.environ['HOSTNAME'], 9001)
+    commands = {"register" : backendConnection.register}
 
     def connectionMade(self):
         irc.IRCClient.connectionMade(self)
@@ -68,6 +68,8 @@ class BattleBot(irc.IRCClient):
 
         # Otherwise check to see if it is a message directed at me
         elif msg.startswith(self.nickname + ":"):
+
+            msg = self.parseCommand(msg[len(self.nickname)+2:])
             self.msg(channel, msg)
             self.logger.log("<%s> %s" % (self.nickname, msg))
 
@@ -77,7 +79,13 @@ class BattleBot(irc.IRCClient):
         user = user.split('!', 1)[0]
         self.logger.log("* %s %s" % (user, msg))
 
+    def parseCommand(self, line):
 
+        args = line.split(' ', 1)
+        com = args[0]
+        params = args[1]
+        msg = self.commands[com](params) #message the return value of this command
+        return msg
 
     #irc callbacks
 
