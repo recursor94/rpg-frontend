@@ -16,12 +16,12 @@ class BackEndConnection:
 
     def sendMessage(self,message):
         self.backsock.send(message)
-    def receiveMessage(self):
-        self.backsock.recv(1024)
 
     def closeConnection(self):
         backsock.close()
 
     def register(self, username):  #Register username in server
-        self.sendMessage("register username " + username + "\n")
-        return receiveMessage()
+        self.sendMessage("register " + username + "\n")
+        return self.backsock.recv(1024)
+
+    
