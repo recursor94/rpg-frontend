@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 #twisted imports
 from twisted.words.protocols import irc
