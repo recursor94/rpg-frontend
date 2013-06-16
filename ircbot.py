@@ -59,19 +59,10 @@ class BattleBot(irc.IRCClient):
         user = user.split('!', 1)[0]
         self.logger.log("<%s> %s" % (user, msg))
 
-        #Check to see if they're sending me a private message
-        if channel == self.nickname:
-            msg = "Hello! I see that you've sent me a private message.\
-            What would you like to discuss?"
-            self.msg(user, msg)
-            return
-
-        # Otherwise check to see if it is a message directed at me
-        elif msg.startswith(self.nickname + ":"):
-
-            msg = self.parseCommand(msg[len(self.nickname)+2:])
-            self.msg(channel, msg)
-            self.logger.log("<%s> %s" % (self.nickname, msg))
+        
+        msg = self.parseCommand(msg[len(self.nickname)+2:])
+        self.msg(channel, msg)
+        self.logger.log("<%s> %s" % (self.nickname, msg))
 
 
     def action (self, user, channel, msg):
